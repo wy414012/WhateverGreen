@@ -37,13 +37,5 @@ jobs:
         with:
           name: WhateverGreen-build
           path: build/*/*.zip
-      - name: Upload to Release
-        if: github.event_name == 'release'
-        uses: svenstaro/upload-release-action@master
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: build/*/*.zip
-          tag: ${{ github.ref }}
-          file_glob: true
 
 
