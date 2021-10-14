@@ -12,7 +12,7 @@ env:
 
 jobs:
   build:
-    name: 开始构建工作
+    name: 使用xcode13.0构建
     runs-on: macos-11
     env:
       JOB_TYPE: BUILD
@@ -37,5 +37,11 @@ jobs:
         with:
           name: WhateverGreen-build
           path: build/*/*.zip
-
-
+      - name: 上传发布版本
+        if: github.event_name == 'release'
+        uses: svenstaro/upload-release-action@483c1e56f95e88835747b1c7c60581215016cbf2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: build/*/*.zip
+          tag: ${{ github.ref }}
+          file_glob: true
