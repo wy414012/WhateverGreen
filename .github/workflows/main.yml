@@ -13,12 +13,12 @@ env:
 jobs:
   build:
     name: 使用xcode13.0构建
-    runs-on: macos-11
+    runs-on: macos-latest
     env:
       JOB_TYPE: BUILD
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
         with:
           repository: wy414012/MacKernelSDK
           path: MacKernelSDK
@@ -33,7 +33,7 @@ jobs:
       - run: xcodebuild -jobs 1 -configuration Release
 
       - name: 打包工作件并上传
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: WhateverGreen-build
           path: build/*/*.zip

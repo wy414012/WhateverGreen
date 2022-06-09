@@ -1,5 +1,11 @@
 WhateverGreen Changelog
 =======================
+#### v1.6.0
+- Added constants required for macOS 13 update
+
+#### v1.5.9
+- Add AMD prefix for all Radeon cards to follow latest Apple naming scheme
+
 #### v1.5.8
 - Inverted logic for GVA support, which is now disabled by default and can be enabled by `enable-gva-support`.
 
