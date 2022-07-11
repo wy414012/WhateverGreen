@@ -1948,6 +1948,16 @@ private:
 	static OSObject *wrapCopyExistingServices(OSDictionary *matching, IOOptionBits inState, IOOptionBits options);
 
 	/**
+	 * Apply patches under dict Development
+	 */
+	static bool applyDevelopmentPatches(IOService *that);
+
+	/**
+	 *  Apply patches for Skylake when spoofing Kaby Lake
+	 */
+	static bool applySklAsKblPatches(IOService *that);
+
+	/**
 	 *  IntelAccelerator::start wrapper to support vesa mode, force OpenGL, prevent fw loading, etc.
 	 */
 	static bool wrapAcceleratorStart(IOService *that, IOService *provider);
