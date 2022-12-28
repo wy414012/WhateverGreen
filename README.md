@@ -35,7 +35,8 @@ WhateverGreen
 - Fixes the kernel panic caused by an incorrectly calculated amount of DVMT pre-allocated memory on Intel ICL platforms.
 - Makes brightness transitions smoother on Intel IVB+ platforms.
 - Fixes the short period garbled screen issue after the system boots on Intel ICL platforms.
-- Fixes the PWM backlight control of the built-in display that is directly wired to AMD Radeon RX 5000 series graphic cards
+- Fixes the PWM backlight control of the built-in display that is directly wired to AMD Radeon RX 5000 series graphic cards.
+- Fixes the freeze during iGPU initialization that may occur on certain laptops such as Chromebooks on macOS 10.15 and later.
 
 #### Documentation
 
@@ -104,6 +105,7 @@ Read [FAQs](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/) an
 | `-igfxmlr` 		    | `enable-dpcd-max-link-rate-fix` property on IGPU 	| Apply the maximum link rate fix 	|
 | `-igfxmpc` 		    | `enable-max-pixel-clock-override` and `max-pixel-clock-frequency` properties on IGPU 	| Increase max pixel clock (as an alternative to patching `CoreDisplay.framework` 	|
 | `-igfxnohdmi` 	  | `disable-hdmi-patches` 	| Disable DP to HDMI conversion patches for digital sound 	|
+| `-igfxnotelemetryload` | `disable-telemetry-load` property on IGPU  | Disables iGPU telemetry loading that may cause a freeze during startup on certain laptops such as Chromebooks
 | `-igfxsklaskbl` 	| N/A 	| Enforce Kaby Lake (KBL) graphics kext being loaded and used on Skylake models (KBL `device-id` and `ig-platform-id` are required. Not required on macOS 13 and above) 	|
 | `-igfxtypec` 		 	| N/A 	| Force DP connectivity for Type-C platforms 	|
 | `-igfxvesa` 		  | N/A 	| Disable Intel Graphics acceleration 	|
