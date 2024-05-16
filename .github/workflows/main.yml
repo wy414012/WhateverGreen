@@ -1,4 +1,4 @@
-name: build
+name: CI
 
 on:
   push:
@@ -12,13 +12,13 @@ env:
 
 jobs:
   build:
-    name: xcode-latest
+    name: build
     runs-on: macos-latest
     env:
       JOB_TYPE: BUILD
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           repository: wy414012/MacKernelSDK
           path: MacKernelSDK
@@ -31,7 +31,7 @@ jobs:
       - run: xcodebuild -jobs 1 -configuration Debug
       - run: xcodebuild -jobs 1 -configuration Release
       
-      - name: 配置安全密钥
+      - name: set key
         env:
           SSH_PRIVATE_KEY: ${{ secrets.GIT_PRIVATE_KEY }}
         run: |
@@ -40,13 +40,13 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           echo "StrictHostKeyChecking no" >> ~/.ssh/config
           
-      - name: push Web server
+      - name: Push Web server
         env:
           SECRET_CHECK_SCRIPT_URL: ${{ secrets.SECRET_CHECK_SCRIPT_URL }}
         run: scp -r ./build/*/*.zip ${SECRET_CHECK_SCRIPT_URL}OC/kext/
         
       - name: 打包工作件并上传
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: WhateverGreen-build
           path: build/*/*.zip
