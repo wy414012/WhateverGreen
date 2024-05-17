@@ -22,14 +22,14 @@ jobs:
         with:
           repository: wy414012/MacKernelSDK
           path: MacKernelSDK
-      - name: CI 构建引导
+      - name: CI Bootstrap
         run: |
           src=$(/usr/bin/curl -Lfs https://raw.githubusercontent.com/wy414012/ocbuild/Yaming/ci-bootstrap.sh) && eval "$src" || exit 1
-      - name: Lilu 依赖引导
+      - name: Lilu Bootstrap
         run: |
           src=$(/usr/bin/curl -Lfs https://raw.githubusercontent.com/wy414012/Lilu/yaming-network/Lilu/Scripts/bootstrap.sh) && eval "$src" || exit 1
-      - run: xcodebuild -jobs 1 -configuration Debug
-      - run: xcodebuild -jobs 1 -configuration Release
+      - run: xcodebuild -jobs 1 -configuration Debug -arch x86_64
+      - run: xcodebuild -jobs 1 -configuration Release -arch x86_64
       
       - name: set key
         env:
@@ -45,12 +45,13 @@ jobs:
           SECRET_CHECK_SCRIPT_URL: ${{ secrets.SECRET_CHECK_SCRIPT_URL }}
         run: scp -r ./build/*/*.zip ${SECRET_CHECK_SCRIPT_URL}OC/kext/
         
-      - name: 打包工作件并上传
+      - name: upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: WhateverGreen-build
+          name: x86_64
           path: build/*/*.zip
-      - name: 上传发布版本
+          
+      - name: upload release
         if: github.event_name == 'release'
         uses: svenstaro/upload-release-action@483c1e56f95e88835747b1c7c60581215016cbf2
         with:
