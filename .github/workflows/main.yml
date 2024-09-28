@@ -25,12 +25,13 @@ jobs:
       - name: CI Bootstrap
         run: |
           src=$(/usr/bin/curl -Lfs https://raw.githubusercontent.com/wy414012/ocbuild/Yaming/ci-bootstrap.sh) && eval "$src" || exit 1
+
       - name: Lilu Bootstrap
         run: |
           src=$(/usr/bin/curl -Lfs https://raw.githubusercontent.com/wy414012/Lilu/yaming-network/Lilu/Scripts/bootstrap.sh) && eval "$src" || exit 1
       - run: xcodebuild -jobs 1 -configuration Debug -arch x86_64
       - run: xcodebuild -jobs 1 -configuration Release -arch x86_64
-      
+
       - name: set key
         env:
           SSH_PRIVATE_KEY: ${{ secrets.GIT_PRIVATE_KEY }}
@@ -39,21 +40,21 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           echo "StrictHostKeyChecking no" >> ~/.ssh/config
-          
+
       - name: Push Web server
         env:
           SECRET_CHECK_SCRIPT_URL: ${{ secrets.SECRET_CHECK_SCRIPT_URL }}
         run: scp -r ./build/*/*.zip ${SECRET_CHECK_SCRIPT_URL}OC/kext/
-        
+
       - name: upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: x86_64
           path: build/*/*.zip
-          
+
       - name: upload release
         if: github.event_name == 'release'
-        uses: svenstaro/upload-release-action@483c1e56f95e88835747b1c7c60581215016cbf2
+        uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: build/*/*.zip
